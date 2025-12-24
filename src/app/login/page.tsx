@@ -78,12 +78,6 @@ export default function LoginPage() {
               placeholder="Şifreyi girin"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                if (e.key === "Enter" && !loading) {
-                  const event = new Event('submit', { bubbles: true });
-                  (e.currentTarget.form as HTMLFormElement)?.dispatchEvent(event);
-                }
-              }}
             />
           </div>
 

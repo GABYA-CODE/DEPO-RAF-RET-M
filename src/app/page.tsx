@@ -29,8 +29,7 @@ export default function Home() {
     return null;
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     setLoading(true);
 
     const pin = password.trim();
@@ -82,7 +81,7 @@ export default function Home() {
           </div>
 
           <Button
-            type="submit"
+            onClick={handleLogin}
             variant="primary"
             className="w-full py-4 text-lg"
             disabled={loading || !password.trim()}

@@ -288,6 +288,37 @@ export function useFirebase() {
     };
   };
 
+  // GET LOGS - İşlem geçmişini çek
+  const getLogs = async (limitCount: number = 100): Promise<LogEntry[]> => {
+    try {
+      const logsCollection = collection(db, "logs");
+      const logsQuery = query(
+        logsCollection,
+        orderBy("ts", "desc"),
+        limit(limitCount)
+      );
+      const snapshot = await getDocs(logsQuery);
+      const logsList: LogEntry[] = [];
+      snapshot.forEach((doc) => {
+        logsList.push({
+          action: doc.data().action || "-",
+          shelf: doc.data().shelf || "-",
+          product: doc.data().product || "-",
+          qty: doc.data().qty || 0,
+          detail: doc.data().detail || "-",
+          role: doc.data().role || "-",
+          pin: doc.data().pin || "-",
+          ts: doc.data().ts,
+        });
+      });
+      console.log(`📊 ${logsList.length} log yüklendi`);
+      return logsList;
+    } catch (err) {
+      console.log(`❌ Log çekme hatası:`, err);
+      return [];
+    }
+  };
+
   return {
     shelves,
     requests,
@@ -300,5 +331,6 @@ export function useFirebase() {
     createRequest,
     setupShelves,
     getStats,
+    getLogs,
   };
 }

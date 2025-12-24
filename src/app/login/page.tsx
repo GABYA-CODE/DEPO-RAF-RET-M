@@ -15,7 +15,7 @@ const STOWER_PINS = new Set(
   Array.from({ length: 4 }, (_, i) => String(3001 + i))
 );
 
-export default function Home() {
+export default function LoginPage() {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("Sadece yetkili kullanıcılar erişebilir.");

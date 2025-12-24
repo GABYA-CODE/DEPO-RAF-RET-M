@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Typography from "@/components/ui/Typography";
+import { useFirebase } from "@/hooks/useFirebase";
 
 interface Session {
   role: "admin" | "packer" | "stower";
@@ -17,6 +18,19 @@ export default function Dashboard() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"put" | "clear" | "search" | "rack" | "request" | "admin">("put");
+  
+  const { shelves, requests, putProduct, clearShelf, searchProduct, createRequest, setupShelves, getStats } = useFirebase();
+  
+  // Form states
+  const [inProduct, setInProduct] = useState("");
+  const [inShelfNum, setInShelfNum] = useState("");
+  const [inQty, setInQty] = useState("1");
+  const [statusMessage, setStatusMessage] = useState("");
+  const [outShelfNum, setOutShelfNum] = useState("");
+  const [searchCode, setSearchCode] = useState("");
+  const [searchResults, setSearchResults] = useState<{ shelf: string; qty: number }[]>([]);
+  const [reqProduct, setReqProduct] = useState("");
+  const [setupCount, setSetupCount] = useState("300");
 
   useEffect(() => {
     const sessionData = localStorage.getItem("session");
@@ -116,6 +130,8 @@ export default function Dashboard() {
                   </label>
                   <input
                     type="text"
+                    value={inProduct}
+                    onChange={(e) => setInProduct(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-white"
                     placeholder="Ürün kodunu girin"
                   />
@@ -126,6 +142,8 @@ export default function Dashboard() {
                   </label>
                   <input
                     type="number"
+                    value={inShelfNum}
+                    onChange={(e) => setInShelfNum(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-white"
                     placeholder="Raf numarasını girin"
                   />
@@ -136,15 +154,38 @@ export default function Dashboard() {
                   </label>
                   <input
                     type="number"
-                    defaultValue="1"
+                    value={inQty}
+                    onChange={(e) => setInQty(e.target.value)}
+                    min="1"
                     className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-white"
                   />
                 </div>
-                <Button variant="primary" className="w-full py-4 text-lg font-bold">
+                <button
+                  onClick={async () => {
+                    if (!inProduct || !inShelfNum || !inQty) {
+                      setStatusMessage("Tüm alanları doldurun");
+                      return;
+                    }
+                    setStatusMessage("İşlem yapılıyor...");
+                    const result = await putProduct(
+                      inProduct,
+                      Number(inShelfNum),
+                      Number(inQty),
+                      session?.pin || ""
+                    );
+                    setStatusMessage(result.message);
+                    if (result.success) {
+                      setInProduct("");
+                      setInShelfNum("");
+                      setInQty("1");
+                    }
+                  }}
+                  className="w-full py-4 px-6 text-lg font-semibold rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors"
+                >
                   ÜRÜNÜ RAFA KOY
-                </Button>
+                </button>
                 <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
-                  <Typography variant="small">İşlem bekleniyor...</Typography>
+                  <Typography variant="small">{statusMessage || "İşlem bekleniyor..."}</Typography>
                 </div>
               </div>
             </Card>

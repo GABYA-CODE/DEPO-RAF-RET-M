@@ -8,7 +8,7 @@ import { Timestamp } from "firebase/firestore/lite";
 interface Request {
   id: string;
   product: string;
-  status: "pending" | "fulfilled";
+  status: "waiting" | "fulfilled";
   requestedBy: string;
   createdAt: Timestamp;
 }

@@ -175,7 +175,7 @@ export function useFirebase() {
   };
 
   // SEARCH (Ürün ara)
-  const searchProduct = (productCode: string) => {
+  const searchProduct = async (productCode: string) => {
     const results: { shelf: string; qty: number }[] = [];
     for (const [raf, data] of Object.entries(shelves)) {
       const qty = Number((data.products && data.products[productCode]) || 0);

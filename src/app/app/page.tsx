@@ -44,6 +44,7 @@ export default function Dashboard() {
 
     getStats,
     getLogs,
+    clearShelf,
   } = useFirebase();
 
   // Form states
@@ -248,18 +249,36 @@ export default function Dashboard() {
                   </label>
                   <input
                     type="number"
+                    value={inShelfNum}
+                    onChange={(e) => setInShelfNum(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-white"
                     placeholder="Raf numarasını girin"
                   />
                 </div>
-                <Button
-                  variant="primary"
-                  className="w-full py-4 text-lg font-bold bg-red-600 hover:bg-red-700"
+                <button
+                  onClick={async () => {
+                    if (!inShelfNum) {
+                      setStatusMessage("Raf numarası boş olamaz.");
+                      return;
+                    }
+                    setStatusMessage("Raf boşaltılıyor...");
+                    const result = await clearShelf(
+                      Number(inShelfNum),
+                      session?.pin || ""
+                    );
+                    setStatusMessage(result.message);
+                    if (result.success) {
+                      setInShelfNum("");
+                    }
+                  }}
+                  className="w-full py-4 text-lg font-bold bg-red-600 text-white hover:bg-red-700 rounded-lg"
                 >
                   RAFI BOŞALT
-                </Button>
+                </button>
                 <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
-                  <Typography variant="small">İşlem bekleniyor...</Typography>
+                  <Typography variant="small">
+                    {statusMessage || "İşlem bekleniyor..."}
+                  </Typography>
                 </div>
               </div>
             </Card>

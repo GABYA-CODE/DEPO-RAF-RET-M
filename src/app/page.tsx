@@ -82,8 +82,7 @@ export default function Home() {
 
           <Button
             onClick={handleLogin}
-            variant="primary"
-            className="w-full py-4 text-lg"
+            className="w-full py-4 px-4 bg-green-600 text-white hover:bg-green-700 rounded-lg font-bold text-lg transition-colors"
             disabled={loading || !password.trim()}
           >
             {loading ? "Giriş yapılıyor..." : "GİRİŞ YAP"}

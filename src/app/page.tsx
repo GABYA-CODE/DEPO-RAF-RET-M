@@ -81,13 +81,14 @@ export default function Home() {
             />
           </div>
 
-          <button
+          <Button
             type="submit"
+            variant="primary"
+            className="w-full py-4 text-lg"
             disabled={loading || !password.trim()}
-            className="w-full py-4 px-6 text-lg font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 dark:bg-blue-500 dark:hover:bg-blue-600"
           >
             {loading ? "Giriş yapılıyor..." : "GİRİŞ YAP"}
-          </button>
+          </Button>
 
           {message && (
             <div
@@ -103,15 +104,7 @@ export default function Home() {
             </div>
           )}
 
-          <Typography variant="small" center className="text-gray-500 dark:text-gray-400 pt-2">
-            Test Şifreleri:
-            <br />
-            Admin: 601, 602, 603
-            <br />
-            Packer: 2001-2009
-            <br />
-            Stower: 3001-3004
-          </Typography>
+
         </form>
       </Card>
     </div>

@@ -81,14 +81,13 @@ export default function Home() {
             />
           </div>
 
-          <Button
-            variant="primary"
-            className="w-full py-4 text-lg font-semibold"
-            onClick={() => handleLogin({} as React.FormEvent)}
+          <button
+            type="submit"
             disabled={loading || !password.trim()}
+            className="w-full py-4 px-6 text-lg font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 dark:bg-blue-500 dark:hover:bg-blue-600"
           >
             {loading ? "Giriş yapılıyor..." : "GİRİŞ YAP"}
-          </Button>
+          </button>
 
           {message && (
             <div

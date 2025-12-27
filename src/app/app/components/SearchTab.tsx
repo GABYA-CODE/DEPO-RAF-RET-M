@@ -30,9 +30,7 @@ export default function SearchTab({ searchProduct }: SearchTabProps) {
 
   return (
     <Card className="shadow-lg">
-      <Typography variant="title" className="mb-6">
-        
-      </Typography>
+      <Typography variant="title" className="mb-6">{""}</Typography>
       <div className="space-y-4">
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">

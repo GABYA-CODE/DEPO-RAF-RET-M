@@ -160,15 +160,21 @@
     }
 
     .tabbar{
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 170px; /* dynamic */
+      display:flex;
+      gap:0;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE 10+ */
       border-top:1px solid var(--border);
       border-bottom:1px solid var(--border);
       background:var(--panel2);
     }
+    .tabbar::-webkit-scrollbar{ display:none; height:6px; }
+    .tab{ flex:0 0 auto; }
     @media (max-width: 900px){
-      .tabbar{ grid-template-columns: 1fr 1fr; }
-      .tabbar .logoutBtn{ grid-column:1 / -1; }
+      .tabbar{ /* keep horizontal scroll on small screens */ }
+      .tabbar .logoutBtn{ margin-left:auto; }
     }
     .tab{
       padding:16px 10px;

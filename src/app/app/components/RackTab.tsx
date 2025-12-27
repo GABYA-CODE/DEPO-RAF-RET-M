@@ -15,7 +15,7 @@ export default function RackTab({ shelves }: RackTabProps) {
   return (
     <Card className="shadow-lg">
       <Typography variant="title" className="mb-6">
-        Raf Durumu
+        
       </Typography>
       <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
         <Typography

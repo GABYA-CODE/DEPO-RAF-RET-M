@@ -43,7 +43,7 @@ export default function PutTab({ session, putProduct }: PutTabProps) {
   return (
     <Card className="shadow-lg">
       <Typography variant="title" className="mb-6">
-        Rafa Ürün Koy
+        
       </Typography>
       <div className="space-y-4">
         <div>

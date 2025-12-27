@@ -31,7 +31,7 @@ export default function SearchTab({ searchProduct }: SearchTabProps) {
   return (
     <Card className="shadow-lg">
       <Typography variant="title" className="mb-6">
-        Ürün Ara
+        
       </Typography>
       <div className="space-y-4">
         <div>

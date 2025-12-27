@@ -32,7 +32,7 @@ export default function ClearTab({ session, clearShelf }: ClearTabProps) {
   return (
     <Card className="shadow-lg">
       <Typography variant="title" className="mb-6">
-        Raf Boşalt
+        
       </Typography>
       <div className="space-y-4">
         <div>

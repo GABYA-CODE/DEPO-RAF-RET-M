@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Typography from "@/components/ui/Typography";
 
@@ -15,6 +15,11 @@ interface ClearTabProps {
 export default function ClearTab({ session, clearShelf }: ClearTabProps) {
   const [inShelfNum, setInShelfNum] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const shelfRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    shelfRef.current?.focus();
+  }, []);
 
   const handleClearShelf = async () => {
     if (!inShelfNum) {
@@ -38,6 +43,7 @@ export default function ClearTab({ session, clearShelf }: ClearTabProps) {
             Raf Numarası
           </label>
           <input
+            ref={shelfRef}
             type="number"
             value={inShelfNum}
             onChange={(e) => setInShelfNum(e.target.value)}
@@ -51,11 +57,13 @@ export default function ClearTab({ session, clearShelf }: ClearTabProps) {
         >
           RAFI BOŞALT
         </button>
-        <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
-          <Typography variant="small">
-            {statusMessage || "İşlem bekleniyor..."}
-          </Typography>
-        </div>
+        {statusMessage && (
+          <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <Typography variant="small">
+              {statusMessage}
+            </Typography>
+          </div>
+        )}
       </div>
     </Card>
   );

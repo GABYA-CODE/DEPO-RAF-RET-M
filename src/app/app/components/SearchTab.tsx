@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Typography from "@/components/ui/Typography";
 
@@ -10,6 +10,9 @@ interface SearchTabProps {
 
 export default function SearchTab({ searchProduct }: SearchTabProps) {
   const [searchCode, setSearchCode] = useState("");
+  const searchRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(()=>{ searchRef.current?.focus(); }, []);
   const [searchResults, setSearchResults] = useState<
     { shelf: string; qty: number }[]
   >([]);
@@ -37,6 +40,7 @@ export default function SearchTab({ searchProduct }: SearchTabProps) {
             Ürün Kodu
           </label>
           <input
+            ref={searchRef}
             type="text"
             value={searchCode}
             onChange={(e) => setSearchCode(e.target.value)}

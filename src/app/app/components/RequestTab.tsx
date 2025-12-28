@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Typography from "@/components/ui/Typography";
 import { Timestamp } from "firebase/firestore/lite";
@@ -28,7 +28,13 @@ export default function RequestTab({
   createRequest,
 }: RequestTabProps) {
   const [reqProduct, setReqProduct] = useState("");
+  const reqRef = useRef<HTMLInputElement | null>(null);
   const [statusMessage, setStatusMessage] = useState("");
+
+  useEffect(() => {
+    // Auto-focus for keyboard entry convenience
+    reqRef.current?.focus();
+  }, []);
 
   const handleCreateRequest = async () => {
     if (!reqProduct.trim()) {
@@ -54,6 +60,7 @@ export default function RequestTab({
               Ürün Kodu
             </label>
             <input
+              ref={reqRef}
               type="text"
               value={reqProduct}
               onChange={(e) => setReqProduct(e.target.value)}

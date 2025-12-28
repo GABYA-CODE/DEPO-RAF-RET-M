@@ -164,13 +164,17 @@
       gap:0;
       overflow-x:auto;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE 10+ */
+      scrollbar-width: thin; /* Firefox: show thin scrollbar */
+      scrollbar-color: rgba(0,0,0,.12) transparent;
+      -ms-overflow-style: auto; /* IE 10+ */
       border-top:1px solid var(--border);
       border-bottom:1px solid var(--border);
       background:var(--panel2);
+      scroll-behavior: smooth;
     }
-    .tabbar::-webkit-scrollbar{ display:none; height:6px; }
+    .tabbar::-webkit-scrollbar{ height:6px; }
+    .tabbar::-webkit-scrollbar-track{ background: transparent; }
+    .tabbar::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.12); border-radius:4px; }
     .tab{ flex:0 0 auto; }
     @media (max-width: 900px){
       .tabbar{ /* keep horizontal scroll on small screens */ }
@@ -192,6 +196,12 @@
       background:rgba(0,200,83,.14);
       color:#064e3b;
       box-shadow: inset 0 -3px 0 rgba(0,200,83,.55);
+    }
+    /* Put tab specific override: amber/yellow when RAFA ÜRÜN KOY is active */
+    #tabPut.active{
+      background: rgba(245,158,11,.14);
+      color: #92400e;
+      box-shadow: inset 0 -3px 0 rgba(245,158,11,.55);
     }
     .logoutBtn{
       padding:16px 10px;

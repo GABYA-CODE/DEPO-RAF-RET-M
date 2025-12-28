@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Typography from "@/components/ui/Typography";
 
@@ -16,6 +16,12 @@ interface PutTabProps {
 
 export default function PutTab({ session, putProduct }: PutTabProps) {
   const [inProduct, setInProduct] = useState("");
+  const productRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    // focus when component mounts
+    productRef.current?.focus();
+  }, []);
   const [inShelfNum, setInShelfNum] = useState("");
   const [inQty, setInQty] = useState("1");
   const [statusMessage, setStatusMessage] = useState("");
@@ -49,6 +55,7 @@ export default function PutTab({ session, putProduct }: PutTabProps) {
             Ürün Kodu
           </label>
           <input
+            ref={productRef}
             type="text"
             value={inProduct}
             onChange={(e) => setInProduct(e.target.value)}
@@ -86,11 +93,13 @@ export default function PutTab({ session, putProduct }: PutTabProps) {
         >
           ÜRÜNÜ RAFA KOY
         </button>
-        <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
-          <Typography variant="small">
-            {statusMessage || "İşlem bekleniyor..."}
-          </Typography>
-        </div>
+        {statusMessage && (
+          <div className="p-4 bg-green-50 dark:bg-green-800 border border-green-200 dark:border-green-700 rounded-lg">
+            <Typography variant="small" className="text-green-900 dark:text-green-100">
+              {statusMessage}
+            </Typography>
+          </div>
+        )}
       </div>
     </Card>
   );

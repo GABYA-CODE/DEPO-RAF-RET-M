@@ -34,3 +34,21 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+---
+
+## Firebase: Otomatik Deploy (GitHub Actions) 🔁
+
+Bu repo, `main` branch'e push yapıldığında (veya manuel tetiklendiğinde) Firebase Hosting'e otomatik deploy yapmak üzere bir GitHub Action içerir.
+
+Adımlar:
+
+1. Firebase Console → Project settings → *Service accounts* → Yeni servis hesabı oluşturup **JSON** anahtarını indir.
+2. GitHub → repository → **Settings → Secrets and variables → Actions → New repository secret**
+   - Secret adı: `FIREBASE_SERVICE_ACCOUNT`
+   - Değer: İndirdiğin JSON dosyasının **tam içeriğini** yapıştır.
+3. Alternatif olarak `firebase login:ci` ile alınan token'ı `FIREBASE_TOKEN` adıyla secret olarak ekleyebilirsin.
+4. Değişiklikleri `main`'e push ettiğinde workflow çalışır. Manuel tetikleme için Actions → ilgili workflow → *Run workflow*'u kullan.
+
+Not: `FIREBASE_SERVICE_ACCOUNT` veya `FIREBASE_TOKEN` yoksa workflow başlatılmayacak ve temiz bir hata mesajı verecektir.
+
